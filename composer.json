@@ -1,0 +1,13 @@
+{
+    "name": "falvey/linkchecker",
+    "type": "project",
+    "require": {
+        "zendframework/zend-http": "^2.10"
+    },
+    "authors": [
+        {
+            "name": "Demian Katz",
+            "email": "demian.katz@villanova.edu"
+        }
+    ]
+}
