@@ -22,23 +22,25 @@ if (file_exists($outfile)) {
 }
 $handle = fopen($infile, 'r');
 $target = fopen($outfile, 'a');
-$client = new \Zend\Http\Client();
 while ($line = fgetcsv($handle, 0, $delimiter)) {
-    $url = $line[$index];
-    if (in_array($url, $checked)) {
+    $url = trim($line[$index]);
+    if (empty($url)) {
+        // skip empty URLs.
+    } elseif (in_array($url, $checked)) {
         echo "$url already checked; skipping...\n";
     } else {
-        check($url, $client, $target);
+        check($url, $target);
         $checked[] = $url;
     }
 }
 fclose($handle);
 fclose($target);
 
-function check($url, $client, $target)
+function check($url, $target)
 {
     echo "Checking $url... ";
     try {
+        $client = new \Zend\Http\Client();
         $client->setUri($url);
         $response = $client->send();
         $code = $response->getStatusCode();
