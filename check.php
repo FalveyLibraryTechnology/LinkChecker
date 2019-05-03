@@ -5,8 +5,9 @@ require_once 'vendor/autoload.php';
 $infile = $argv[1] ?? null;
 $outfile = $argv[2] ?? null;
 $index = $argv[3] ?? 0;
+$delimiter = $argv[4] ?? ',';
 if (empty($outfile)) {
-    die("Must specify output file. Syntax: {$argv[0]} [input csv] [output csv] [index of URL]\n");
+    die("Must specify output file. Syntax: {$argv[0]} [input csv] [output csv] [index of URL] [CSV delimiter]\n");
 }
 if (!file_exists($infile)) {
     die("Cannot open $infile");
@@ -22,7 +23,7 @@ if (file_exists($outfile)) {
 $handle = fopen($infile, 'r');
 $target = fopen($outfile, 'a');
 $client = new \Zend\Http\Client();
-while ($line = fgetcsv($handle, 0, ';')) {
+while ($line = fgetcsv($handle, 0, $delimiter)) {
     $url = $line[$index];
     if (in_array($url, $checked)) {
         echo "$url already checked; skipping...\n";
