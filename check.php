@@ -40,7 +40,7 @@ function check($url, $target)
 {
     echo "Checking $url... ";
     try {
-        $client = new \Zend\Http\Client();
+        $client = new \Laminas\Http\Client();
         $client->setUri($url);
         $response = $client->send();
         $code = $response->getStatusCode();
